@@ -9,11 +9,20 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/dotenv": "latest",
     "@woovi/node-sdk": "latest",
     "dotenv": "latest",
-    "@types/dotenv": "latest"
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest"
   },
   "devDependencies": {
-    "bun-types": "latest"
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "autoprefixer": "latest",
+    "bun-types": "latest",
+    "postcss": "latest",
+    "tailwindcss": "latest",
+    "typescript": "5.7.2"
   }
 }
