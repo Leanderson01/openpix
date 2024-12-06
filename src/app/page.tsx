@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { createNewCharge, getCharges } from "./api";
-import { Charge, ChargeResponse } from "./types";
+import { Charge, ListResponse } from "./types";
 
 export default function Home() {
   const [charges, setCharges] = useState<Charge[]>([]);
@@ -20,7 +20,7 @@ export default function Home() {
   const loadCharges = async () => {
     try {
       const response = await getCharges();
-      const data = response as ChargeResponse;
+      const data = response as ListResponse;
       setCharges(data.charges || []);
     } catch (error) {
       console.error("Erro ao carregar cobranças:", error);
@@ -28,8 +28,13 @@ export default function Home() {
     }
   };
 
+  console.log(charges);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.currentTarget;
+    const { name, value } = e.target as typeof e.target & {
+      name: string;
+      value: string;
+    };
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -157,8 +162,10 @@ export default function Home() {
                         {charge.brCode && (
                           <div className="flex flex-col items-center">
                             <button
-                              onClick={() => {
-                                navigator.clipboard.writeText(charge.brCode!);
+                              onClick={(e) => {
+                                e.preventDefault();
+                                // @ts-ignore
+                                navigator.clipboard.writeText(charge.brCode!);                                
                                 alert("Código PIX copiado!");
                               }}
                               className="text-sm bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
